@@ -45,7 +45,7 @@ class _QuizPageState extends State<QuizPage> {
 
   Icon getAnswer() {
     Icon answer;
-    if (quizBrain.questionBank[questionIndex].questionAnswer == true) {
+    if (quizBrain.getQuestionAnswer(questionIndex) == true) {
       scoreKeeper.add(answer = rightAnswer());
     } else {
       scoreKeeper.add(answer = wrongAnswer());
@@ -55,7 +55,7 @@ class _QuizPageState extends State<QuizPage> {
 
   void updateQuestionIndex() {
     questionIndex++;
-    if (questionIndex >= quizBrain.questionBank.length) {
+    if (questionIndex >= quizBrain.getNumberOfQuestions()) {
       questionIndex = 0;
     }
   }
@@ -72,7 +72,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.questionBank[questionIndex].questionText,
+                quizBrain.getQuestionText(questionIndex),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
