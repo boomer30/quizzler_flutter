@@ -43,7 +43,7 @@ class QuizBrain {
   }
 
   void nextQuestion() {
-    if (_questionIndex < _questionBank.length) {
+    if (_questionIndex < _questionBank.length - 1) {
       _questionIndex++;
     } else {
       _questionIndex = 0;
