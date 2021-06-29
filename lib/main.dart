@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'quiz_brain.dart';
 
 void main() => runApp(Quizzler());
@@ -43,9 +44,9 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Icon getAnswer() {
+  Icon getAnswer(bool userAnswer) {
     Icon answer;
-    if (quizBrain.getQuestionAnswer() == true) {
+    if (quizBrain.getQuestionAnswer() == userAnswer) {
       scoreKeeper.add(answer = rightAnswer());
     } else {
       scoreKeeper.add(answer = wrongAnswer());
@@ -58,6 +59,16 @@ class _QuizPageState extends State<QuizPage> {
     if (questionIndex >= quizBrain.getNumberOfQuestions()) {
       questionIndex = 0;
     }
+  }
+
+  void restartQuiz() {
+    Alert(
+      context: context,
+      title: "QuizBrain Alert",
+      desc: "Quiz Completed!",
+    ).show();
+    quizBrain.reset();
+    scoreKeeper.clear();
   }
 
   @override
@@ -98,8 +109,12 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  getAnswer();
-                  quizBrain.nextQuestion();
+                  if (!quizBrain.isFinished()) {
+                    getAnswer(true);
+                    quizBrain.nextQuestion();
+                  } else {
+                    restartQuiz();
+                  }
                 });
               },
             ),
@@ -121,8 +136,12 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  getAnswer();
-                  quizBrain.nextQuestion();
+                  if (!quizBrain.isFinished()) {
+                    getAnswer(false);
+                    quizBrain.nextQuestion();
+                  } else {
+                    restartQuiz();
+                  }
                 });
               },
             ),

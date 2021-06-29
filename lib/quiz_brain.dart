@@ -49,4 +49,16 @@ class QuizBrain {
       _questionIndex = 0;
     }
   }
+
+  bool isFinished() {
+    bool finished = false;
+    if (_questionIndex == _questionBank.length - 1) {
+      finished = true;
+    }
+    return finished;
+  }
+
+  void reset() {
+    _questionIndex = 0;
+  }
 }
